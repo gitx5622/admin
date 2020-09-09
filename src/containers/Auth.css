@@ -1,0 +1,26 @@
+.Auth {
+    padding: 60px 0;
+}
+
+.Auth .card-style {
+    margin: 0 auto;
+    max-width: 320px;
+}
+
+.Auth .login-style {
+    margin: 0 auto;
+    max-width: 320px;
+}
+
+.title {
+    font-family: "Old English Text MT";
+}
+
+@media (max-width: 768px) {
+    .Auth .card-style {
+        margin-top: 0px;
+        max-width: 300px;
+    }
+
+}
+
