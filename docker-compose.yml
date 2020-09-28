@@ -4,4 +4,12 @@ services:
     container_name: likee_dev
     image: gits5622/admin
     ports:
-        - '3001:80'
+        - '3003:80'
+
+  web-prod:
+    container_name: likee-prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - '3004:80'
