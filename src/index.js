@@ -8,14 +8,14 @@ import * as serviceWorker from './serviceWorker';
 import {createStore, compose, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 import setAuthorizationToken from "./authorization";
 import { LOGIN_SUCCESS} from "./store/auth/actionTypes";
 import reducer from "./store/combinedReducer";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhances(
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk)
 ));
 
 // when the page reloads, the auth user is still set

@@ -1,18 +1,20 @@
-import React  from 'react';
+import React, {useEffect} from 'react';
 import '../css/main.css'
 import profilepic from '../images/profile.jpeg'
 import prog1 from '../images/prog1.jpg';
 import prog2 from '../images/prog2.jpg';
 import temp from '../images/temp.jpg';
+import logo from '../images/download.svg';
 import devops from '../images/devops.png';
 import { Card, CardBody, Row, Col, CardHeader,CardImg, Progress} from 'shards-react'
 import Charts from "./Charts";
 import PieCharts from "./PieCharts";
 import { Input } from 'antd';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import {useDispatch, useSelector} from "react-redux";
+import {SignOut} from "../store/auth/actions/authActions";
 
 const { Search } = Input;
-
 
 const Main = () => {
     const closeNav = () => {
@@ -26,31 +28,57 @@ const Main = () => {
 
     }
     const handle = useFullScreenHandle();
+
+    const currentState = useSelector((state)=> state.Auth);
+
+    const { isAuthenticated, currentUser, getAllUsers } = currentState;
+
+    const getUsers = getAllUsers.length
+
+    const dispatch = useDispatch();
+
+    const Logout = () => dispatch(SignOut())
+
+    const logout = (e) => {
+        e.preventDefault();
+        Logout()
+    };
+
+    const SignedOutLinks = (
+        <ul className="signout-links">
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    );
+
+    const SignedInLinks = (
+        <button type="button" className="btn btn-primary"><a onClick={logout} style={{color:"black"}} href="/login">Logout({currentUser.response.username})</a></button>
+    );
         return (
             <div>
                 <FullScreen handle={handle}>
                 <div id="mySidenav" className="sidenav">
                     <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
                     <ul>
-                        <li><i className="fa fa-home fa-2x" style={{color:"#F36F21"}} aria-hidden="true"><a href="#">Home</a></i></li>
-                        <li><i className="fab fa-servicestack fa-2x"><a href="#">Services</a></i></li>
-                        <li><i className="fas fa-mug-hot fa-2x"><a href="#">Clients</a></i></li>
-                        <li><i className="fas fa-address-book fa-2x"><a href="#">Contact</a></i></li>
-                        <li><i className="fas fa-palette fa-2x"><a href="#">Pages</a></i></li>
-                        <li><i className="fas fa-table fa-2x"><a href="#">Tables</a></i></li>
-                        <li><i className="fas fa-globe-africa fa-2x"><a href="#">Maps</a></i></li>
-                        <li><i className="fas fa-chart-pie fa-2x"><a href="#">Charts</a></i></li>
-                        <li><i className="fas fa-cogs fa-2x"><a href="#">Settings</a></i></li>
-                        <li><i className="fab fa-app-store fa-2x"><a href="#">Applications</a></i></li>
-                        <li><i className="fas fa-chart-pie fa-2x"><a href="#">Followers</a></i></li>
-                        <li><i className="fas fa-globe-africa fa-2x"><a href="#">Subscribers</a></i></li>
-                        <li><i className="fas fa-newspaper fa-2x"><a href="#">Articles</a></i></li>
+                        <li><i className="fa fa-home fa-2x" style={{color:"#F36F21"}} aria-hidden="true"><a href="/">Home</a></i></li>
+                        <li><i className="fab fa-servicestack fa-2x"><a href="/">Services</a></i></li>
+                        <li><i className="fas fa-mug-hot fa-2x"><a href="/">Clients</a></i></li>
+                        <li><i className="fas fa-address-book fa-2x"><a href="/">Contact</a></i></li>
+                        <li><i className="fas fa-palette fa-2x"><a href="/">Pages</a></i></li>
+                        <li><i className="fas fa-table fa-2x"><a href="/">Tables</a></i></li>
+                        <li><i className="fas fa-globe-africa fa-2x"><a href="/">Maps</a></i></li>
+                        <li><i className="fas fa-chart-pie fa-2x"><a href="/">Charts</a></i></li>
+                        <li><i className="fas fa-cogs fa-2x"><a href="/">Settings</a></i></li>
+                        <li><i className="fab fa-app-store fa-2x"><a href="/">Applications</a></i></li>
+                        <li><i className="fas fa-chart-pie fa-2x"><a href="/">Followers</a></i></li>
+                        <li><i className="fas fa-globe-africa fa-2x"><a href="/">Subscribers</a></i></li>
+                        <li><i className="fas fa-newspaper fa-2x"><a href="/">Articles</a></i></li>
                     </ul>
                 </div>
 
                 <div id="main">
                     <Row>
-                        <Col><span style={{ fontSize:"30px", cursor:"pointer"}} onClick={openNav}>&#9776;      Doctorateessays</span></Col>
+                        <Col><span style={{ fontSize:"30px", cursor:"pointer"}} onClick={openNav}>&#9776; <img src={logo} width="30" height="30" alt=""/>      Doctorateessays</span></Col>
 
                         <Col> <Search
                             placeholder="input search text"
@@ -65,7 +93,8 @@ const Main = () => {
                             <ul>
                                 <li><i className="fas fa-sms fa-2x" style={{paddingRight: "20px",color:"#60FC8D"}}/></li>
                                  <li><i className="fas fa-expand fa-2x" onClick={handle.enter} style={{paddingRight: "20px"}}/></li>
-                                <li><img className="profilepic" src={profilepic} width="50" height="50" style={{borderRadius:"100px"}}/></li>
+                                <li>{isAuthenticated ? SignedInLinks: SignedOutLinks }</li>
+                                <li><img className="profilepic" src={profilepic} width="50" height="50" style={{borderRadius:"100px"}} alt=""/></li>
                             </ul>
                               </span>
                             </div>
@@ -76,7 +105,7 @@ const Main = () => {
                         <Col>
                             <Card style={{ width: 220, backgroundColor:"#E6438A", borderRadius:"10px", minHeight:"100px", paddingTop:"30px",paddingLeft:"10px" }}>
                                 <Row>
-                                    <Col><h3>Users<br/>1200</h3></Col>
+                                    <Col><h3>Users<br/>{getUsers}</h3></Col>
                                     <Col><i className="fas fa-users fa-3x"/></Col>
                                 </Row>
                             </Card>,
@@ -145,38 +174,38 @@ const Main = () => {
                     <div className="row">
                         <div className="col-sm-4">
                             <div className="card">
-                                <img className="card-img-top" src={prog2} alt="Card image cap"/>
+                                <img className="card-img-top" src={prog2} alt=""/>
                                     <div className="card-body">
                                         <h4 className="card-title">Agile Methodology</h4>
                                         <p className="card-text">Agile methodology is a type of project management process, mainly used for software development, where demands and solutions
                                             evolve through the collaborative effort of self-organizing and cross-functional teams and their customers.
                                             In the Agile model, both development and testing activities are concurrent, unlike the Waterfall model.</p>
-                                        <a href="#" className="btn btn-primary">Tell me more &rarr;</a>
+                                        <a href="/" className="btn btn-primary">Tell me more &rarr;</a>
                                     </div>
                             </div>
                         </div>
                         <div className="col-sm-4">
                             <div className="card">
-                                <img className="card-img-top" src={prog1} alt="Card image cap"/>
+                                <img className="card-img-top" src={prog1} alt=""/>
                                     <div className="card-body">
                                         <h4 className="card-title">INTRODUCTION TO CICD</h4>
                                         <p className="card-text">Continuous integration, delivery and deployment are practices designed to help increase the speed of development
                                             and the release of well-tested products. Continuous integration encourages developers to integrate their
                                             code frequently to a shared code base early and each integration is verified by a build to minimize
                                             integration errors. </p>
-                                        <a href="#" className="btn btn-primary">Tell me more &rarr;</a>
+                                        <a href="/" className="btn btn-primary">Tell me more &rarr;</a>
                                     </div>
                             </div>
                         </div>
                         <div className="col-sm-4">
                             <div className="card">
-                                <img className="card-img-top" src={devops} alt="Card image cap"/><br/><br/>
+                                <img className="card-img-top" src={devops} alt=""/><br/><br/>
                                 <div className="card-body">
                                     <h4 className="card-title">Continuous Deployment (CD)</h4>
                                     <p className="card-text">Continuous deployment extends so that the software build will automatically
                                         deploy if it passes all tests.The last step will automatically deploy whatever build components/packages successfully exit the delivery pipeline.
                                         Such automatic deployments can be configured and provide clarity on precisely what has is presently in production.</p>
-                                    <a href="#" className="btn btn-primary">Tell me more &rarr;</a>
+                                    <a href="/" className="btn btn-primary">Tell me more &rarr;</a>
                                 </div>
                             </div>
                         </div>

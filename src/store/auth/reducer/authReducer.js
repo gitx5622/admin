@@ -2,7 +2,7 @@ import { SIGNUP_SUCCESS, SIGNUP_ERROR, LOGIN_SUCCESS, LOGIN_ERROR,
     LOGOUT_SUCCESS, UPDATE_USER_AVATAR, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR,
     BEFORE_STATE, UPDATE_USER_AVATAR_ERROR, BEFORE_AVATAR_STATE, BEFORE_USER_STATE,
     FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_ERROR, RESET_PASSWORD_SUCCESS,
-    RESET_PASSWORD_ERROR, DELETE_USER_SUCCESS, DELETE_USER_ERROR  } from '../actionTypes/index'
+    RESET_PASSWORD_ERROR, DELETE_USER_SUCCESS, DELETE_USER_ERROR,GET_USERS_SUCCESS,GET_USERS_ERROR  } from '../actionTypes/index'
 import isEmpty from 'lodash/isEmpty';
 
 export const initState = {
@@ -12,11 +12,14 @@ export const initState = {
     isLoadingAvatar: false,
     isUpdatingUser: false,
     authError: null,
-    authSuccess: null
+    authSuccess: null,
+    getAllUsers: []
+
 }
 
 const authReducer = (state = initState, action) => {
-    switch(action.type) {
+    const { payload, type } = action
+    switch(type) {
 
         // This is the state to set when the button is click and we are waiting for response
         case BEFORE_STATE:
@@ -41,6 +44,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
+                getAllUsers: [payload, ...state.getAllUsers],
                 signupError: null,
                 loginError: null
 
@@ -49,7 +53,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                signupError: action.payload,
+                signupError: payload,
                 loginError: null
 
             }
@@ -57,17 +61,31 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                currentUser: action.payload,
-                isAuthenticated: !isEmpty(action.payload),
+                currentUser: payload,
+                isAuthenticated: !isEmpty(payload),
                 loginError: null,
                 signupError: null,
+
+            }
+        case GET_USERS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                getAllUsers: payload
+
+            }
+        case GET_USERS_ERROR:
+            return {
+                ...state,
+                isLoading: true,
+                getUserError: "Failed to load users"
 
             }
         case LOGIN_ERROR:
             return {
                 ...state,
                 isLoading: false,
-                loginError: action.payload,
+                loginError: payload,
                 signupError: null,
 
             }
@@ -86,7 +104,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoadingAvatar: false,
-                currentUser: action.payload,
+                currentUser: payload,
                 avatarError: null,
                 authSuccessImage: "Image Uploaded"
             }
@@ -94,13 +112,13 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoadingAvatar: false,
-                avatarError: action.payload,
+                avatarError: payload,
             }
         case UPDATE_USER_SUCCESS:
             return {
                 ...state,
                 isUpdatingUser: false,
-                currentUser: action.payload,
+                currentUser: payload,
                 userError: null,
                 authSuccessUser: "Details Updated"
             }
@@ -108,7 +126,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isUpdatingUser: false,
-                userError: action.payload
+                userError: payload
             }
         case DELETE_USER_SUCCESS:
             return {
@@ -122,7 +140,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                userError: action.payload
+                userError: payload
             }
         case FORGOT_PASSWORD_SUCCESS:
             return {
@@ -135,7 +153,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                forgotError: action.payload
+                forgotError: payload
             }
         case RESET_PASSWORD_SUCCESS:
             return {
@@ -148,7 +166,7 @@ const authReducer = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                resetError: action.payload
+                resetError: payload
             }
         default:
             return state;

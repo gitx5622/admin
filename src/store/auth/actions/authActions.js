@@ -3,7 +3,7 @@ import axios from 'axios';
 import setAuthorizationToken from "../../../authorization";
 import {history} from "../../../history";
 import { BEFORE_STATE, SIGNUP_SUCCESS, SIGNUP_ERROR, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT_SUCCESS, UPDATE_USER_AVATAR, UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, UPDATE_USER_AVATAR_ERROR, BEFORE_AVATAR_STATE, BEFORE_USER_STATE, FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_ERROR, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_ERROR, DELETE_USER_SUCCESS, DELETE_USER_ERROR } from '../actionTypes';
+    FORGOT_PASSWORD_ERROR, GET_USERS_SUCCESS, GET_USERS_ERROR, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_ERROR, DELETE_USER_SUCCESS, DELETE_USER_ERROR } from '../actionTypes';
 import {message} from "antd";
 
 export const checkAuthTimeout = expirationTime => {
@@ -12,6 +12,17 @@ export const checkAuthTimeout = expirationTime => {
             dispatch(SignOut());
         }, expirationTime * 1000);
     };
+};
+export const getUsers = () => {
+
+    return (dispatch) => {
+
+        axios.get(`${API_ROUTE}/users`).then(res => {
+            dispatch({ type: GET_USERS_SUCCESS, payload: res.data.response })
+        }).catch(err => {
+            dispatch({ type: GET_USERS_ERROR, payload: err.response ? err.response.data.error : "" })
+        })
+    }
 };
 
 export const SignIn = (credentials) => {
@@ -46,7 +57,7 @@ export const SignUp = (newUser) => {
     return async (dispatch) => {
         dispatch({ type: BEFORE_STATE });
         try {
-            await axios.post(`${API_ROUTE}/register`, newUser);
+            await axios.post(`${API_ROUTE}/users`, newUser);
             dispatch({ type: SIGNUP_SUCCESS });
             history.push('/login');
         } catch(err) {
@@ -142,6 +153,7 @@ export const ResetPassword = (details, clearInput) => {
         }
     }
 };
+
 
 
 

@@ -11,7 +11,7 @@ const Login = () => {
     const currentState = useSelector((state) => state.Auth);
 
     const [user, setUser] = useState({
-        username:'',
+        email:'',
         password: ''
     });
     const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const Login = () => {
     const submitUser = (e) => {
         e.preventDefault()
         userLogin({
-            username: user.username,
+            email: user.email,
             password: user.password
         });
     }
@@ -47,50 +47,14 @@ const Login = () => {
                     </div>
                     <CardBody>
                         <Form onSubmit={submitUser}>
-                            <div className="mb-2">
-                                { currentState.loginError && currentState.loginError.Incorrect_details ? (
-                                    <p className="text-danger">{currentState.loginError.Incorrect_details}</p>
-                                ) : (
-                                    ""
-                                )}
-                                { currentState.loginError && currentState.loginError.No_record ? (
-                                    <small className="text-danger">{currentState.loginError.No_record}</small>
-                                ) : (
-                                    ""
-                                )}
-                            </div>
                             <FormGroup>
-                                <label>Username</label>
-                                <FormInput type="text" name="username" placeholder="Enter username" onChange={handleChange} />
-                                { currentState.loginError && currentState.loginError.Required_username ? (
-                                    <p className="text-danger">{currentState.loginError.Required_username}</p>
-                                ) : (
-                                    ""
-                                )}
-                                { currentState.loginError && currentState.loginError.Invalid_username ? (
-                                    <p className="text-danger">{ currentState.loginError.Invalid_username }</p>
-                                ) : (
-                                    ""
-                                )}
+                                <label>Email</label>
+                                <FormInput type="text" name="email" placeholder="Enter email" onChange={handleChange} />
+
                             </FormGroup>
                             <FormGroup>
                                 <label>Password</label>
                                 <FormInput type="password" name="password" placeholder="Enter password" onChange={handleChange}/>
-                                { currentState.loginError && currentState.loginError.Required_password ? (
-                                    <small className="color-red">{ currentState.loginError.Required_password }</small>
-                                ) : (
-                                    ""
-                                )}
-                                { currentState.loginError && currentState.loginError.Invalid_password ? (
-                                    <small className="color-red">{ currentState.loginError.Invalid_password }</small>
-                                ) : (
-                                    ""
-                                )}
-                                { currentState.loginError && currentState.loginError.Incorrect_password ? (
-                                    <small className="color-red">{ currentState.loginError.Incorrect_password }</small>
-                                ) : (
-                                    ""
-                                )}
                             </FormGroup>
 
                             { currentState.isLoading ? (
