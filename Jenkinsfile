@@ -17,18 +17,6 @@ pipeline {
                         dockerImage = docker.build registry
                         }
                     }
-                    post{
-                        always{
-                            echo "Running"
-                        }
-                        success{
-                            echo "Success"
-
-                        }
-                        failure{
-                            echo "Failed"
-                        }
-                    }
                 }
                  stage('Deploy our image') {
                                     steps{
@@ -42,7 +30,7 @@ pipeline {
 
                 stage ('Running tha Application'){
                     steps{
-                        sh "docker-compose up -d"
+                        sh "docker-compose up"
                     }
                 }
 
