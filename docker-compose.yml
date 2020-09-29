@@ -1,11 +1,5 @@
 version: '3'
 services:
-  web-dev:
-    container_name: likee_dev
-    image: gits5622/admin
-    ports:
-        - '3003:80'
-
   web-prod:
     container_name: likee-prod
     build:
