@@ -30,7 +30,7 @@ pipeline {
 
                 stage ('Running tha Application'){
                     steps{
-                        sh "docker container run -p 3000:80 gits5622/admin"
+                        sh "docker run gits5622/admin"
                     }
                 }
 
