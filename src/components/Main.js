@@ -52,7 +52,7 @@ const Main = () => {
     );
 
     const SignedInLinks = (
-        <button type="button" className="btn btn-primary"><a onClick={logout} style={{color:"black"}} href="/login">Logout({currentUser.response.username})</a></button>
+        <button type="button" className="btn btn-primary"><a onClick={logout} style={{color:"black"}} href="/login">Logout</a></button>
     );
         return (
             <div>
