@@ -7,8 +7,8 @@ import MainBody from "./mainBody";
 
 const Main = () => {
   const closeNav = () => {
-    document.getElementById("mySidenav").style.width = "10px";
-    document.getElementById("main").style.marginLeft = "10px";
+    document.getElementById("mySidenav").style.width = "0px";
+    document.getElementById("main").style.marginLeft = "0px";
     window.location.reload();
   };
   const openNav = () => {
