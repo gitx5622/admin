@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { SignIn } from "../store/auth/actions/authActions";
 import {Row, Col, Button} from 'shards-react';
-
+import { BiArrowBack } from 'react-icons/all';
 
 const Login = () => {
   const currentState = useSelector((state) => state.Auth);
@@ -38,7 +38,7 @@ const Login = () => {
       <div className="login-form">
         <div className="col-md-4 offset-md-4">
           <center>
-              <Button href="/" block theme="info">Go Home</Button><br/>
+              <Button href="/" block theme="info"><BiArrowBack/> Go Home</Button><br/>
             <h3>Login</h3>
           </center>
           <form onSubmit={submitUser}>
