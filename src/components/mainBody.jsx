@@ -83,7 +83,7 @@ class MainBody extends Component {
                 </Col>
               </Row>
             </Card>
-            ,
+            <br/>
           </Col>
           <Col>
             <Card
@@ -109,7 +109,7 @@ class MainBody extends Component {
                 </Col>
               </Row>
             </Card>
-            ,
+            <br/>
           </Col>
           <Col>
             <Card
@@ -135,6 +135,7 @@ class MainBody extends Component {
                 </Col>
               </Row>
             </Card>
+            <br/>
           </Col>
           <Col>
             <Card
@@ -160,6 +161,7 @@ class MainBody extends Component {
                 </Col>
               </Row>
             </Card>
+            <br/>
           </Col>
         </Row>
         <Card>
