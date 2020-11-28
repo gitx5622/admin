@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AiFillCloseCircle } from 'react-icons/all';
 
 const SideNav = ({ closeNav }) => {
   return (
     <div>
       <Link className="closebtn" onClick={closeNav}>
+        <AiFillCloseCircle/>
       </Link>
       <ul>
         <li>

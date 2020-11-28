@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/main.css";
+import { Button } from 'shards-react';
 import { useDispatch, useSelector } from "react-redux";
 import { SignOut } from "../store/auth/actions/authActions";
 import SideNav from "./sideNav";
@@ -32,22 +33,24 @@ const Main = () => {
   };
 
   const SignedOutLinks = (
-    <ul className="signout-links">
+    <>
       <li>
-        <a href="/login">Login</a>
+        <Button theme="info" pill href="/login">Login</Button>
       </li>
-      <li>
-        <a href="/signup">Signup</a>
+      <li style={{paddingLeft:"20px"}}>
+        <Button theme="info" pill href="/signup">Signup</Button>
       </li>
-    </ul>
+    </>
   );
 
   const SignedInLinks = (
+    <li>
     <button type="button" className="btn btn-primary">
-      <a onClick={logout} style={{ color: "black" }} href="/login">
+      <Button theme="info" pill onClick={logout} style={{ color: "black" }} href="/login">
         Logout
-      </a>
+      </Button>
     </button>
+    </li>
   );
   return (
     <div>

@@ -10,15 +10,12 @@ import {
 } from "shards-react";
 import Charts from "./Charts";
 import PieCharts from "./PieCharts";
-import profilepic from "../images/profile.jpeg";
+import profilepic from "../images/profile.png";
 import prog1 from "../images/prog1.jpg";
 import prog2 from "../images/prog2.jpg";
 import temp from "../images/temp.jpg";
 import logo from "../images/download.svg";
 import devops from "../images/devops.png";
-import { Input } from "antd";
-
-const { Search } = Input;
 
 class MainBody extends Component {
   render() {
@@ -37,37 +34,20 @@ class MainBody extends Component {
               onClick={openNav}
             >
               &#9776; <img src={logo} width="30" height="30" alt="" />{" "}
-              Doctorateessays
+              Admin Portal
             </span>
-          </Col>
-
-          <Col>
-            {" "}
-            <Search
-              placeholder="input search text"
-              enterButton="Search"
-              size="large"
-              style={{ width: 400, marginTop: "10px" }}
-              onSearch={(value) => console.log(value)}
-            />
           </Col>
           <Col>
             <div className="right-navbar" style={{ float: "right" }}>
               <span style={{ cursor: "pointer" }}>
-                <ul>
-                  <li>
-                    <i
-                      className="fas fa-sms fa-2x"
-                      style={{ paddingRight: "20px", color: "#60FC8D" }}
-                    />
-                  </li>
-                  <li>{isAuthenticated ? SignedInLinks : SignedOutLinks}</li>
-                  <li>
+                <ul style={{display:"flex"}}>
+                  {isAuthenticated ? SignedInLinks : SignedOutLinks}
+                  <li style={{paddingLeft:"20px"}}>
                     <img
                       className="profilepic"
                       src={profilepic}
-                      width="50"
-                      height="50"
+                      width="40"
+                      height="40"
                       style={{ borderRadius: "100px" }}
                       alt=""
                     />

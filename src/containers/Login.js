@@ -43,7 +43,7 @@ const Login = () => {
             <div className="container Auth animated flash">
                 <Card className="card-style">
                     <div className="card-body">
-                        <h1 className="title">Doctorateessays</h1>
+                        <h1 className="title">Admin Portal</h1>
                     </div>
                     <CardBody>
                         <Form onSubmit={submitUser}>

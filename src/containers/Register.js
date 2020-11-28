@@ -43,7 +43,7 @@ const Register = () => {
             <div className="container Auth animated flash">
                 <Card className="card-style">
                     <CardHeader>
-                        <h1 className="title">Doctorateessays</h1>
+                        <h1 className="title">Admin Portal</h1>
                     </CardHeader>
                    <CardBody>
                         <Form onSubmit={submitUser}>
