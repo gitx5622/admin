@@ -44,11 +44,9 @@ const Main = () => {
 
   const SignedInLinks = (
     <li>
-    <button type="button" className="btn btn-primary">
       <Button theme="info" pill onClick={logout} style={{ color: "black" }} href="/login">
         Logout
       </Button>
-    </button>
     </li>
   );
   return (
