@@ -1,94 +1,133 @@
-import React,{useState} from "react";
+import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, Link } from 'react-router-dom';
-import background from '../images/background.jpg';
-import "./Auth.css";
-import { SignUp } from '../store/auth/actions/authActions';
-import { Form, FormGroup, FormInput ,Button, Card, CardBody, CardHeader} from "shards-react";
+import { Redirect } from "react-router-dom";
+import { SignUp } from "../store/auth/actions/authActions";
+import {Row, Col, Button} from 'shards-react';
 
 const Register = () => {
-    const currentState = useSelector((state) => state.Auth);
+  const currentState = useSelector((state) => state.Auth);
 
-    const [user, setUser] = useState({
-        username:'',
-        email: '',
-        password: ''
-    });
-    const dispatch = useDispatch();
+  const [user, setUser] = useState({
+      first_name:'',
+      last_name:'',
+      username:'',
+      email: '',
+      password: '',
+      password_confirmation:''
+  });
+  const dispatch = useDispatch();
 
-    const addUser = (credentials) => dispatch(SignUp(credentials));
+  const addUser = (credentials) => dispatch(SignUp(credentials));
 
-    const handleChange = e => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        })
-    };
-    const submitUser = (e) => {
-        e.preventDefault();
-        addUser({
-            username: user.username,
-            email: user.email,
-            password: user.password,
-        });
-    };
+  const handleChange = e => {
+      setUser({
+          ...user,
+          [e.target.name]: e.target.value
+      })
+  };
+  const submitUser = (e) => {
+      e.preventDefault();
+      addUser({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          password_confirmation: user.password_confirmation
+      });
+  };
 
-    if(currentState.isAuthenticated){
-        return <Redirect to='/' />
-    }
+  if(currentState.isAuthenticated){
+    return <Redirect to='/' />
+  }
+
     return (
-        <div>
-        <div className="App"  style={{ backgroundImage:`url(${background})`,backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center', backgroundSize: 'cover'}}>
-            <div className="container Auth animated flash">
-                <Card className="card-style">
-                    <CardHeader>
-                        <h1 className="title">Admin Portal</h1>
-                    </CardHeader>
-                   <CardBody>
-                        <Form onSubmit={submitUser}>
-                            <div className="form-group">
-                                <label>User Name</label>
-                                <FormInput type="text" name="username" placeholder="Enter username"  onChange={handleChange}/>
-                            </div>
-                            <FormGroup>
-                                <label>Email</label>
-                                <FormInput type="email" name="email" placeholder="Enter email" onChange={handleChange} />
-                            </FormGroup>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <FormInput type="password" name="password" placeholder="Enter password" onChange={handleChange}/>
-                            </div>
-                            { currentState.isLoading ? (
-                                <Button
-                                    color="primary"
-                                    type="submit"
-                                    block
-                                    disabled
-                                >
-                                    Registering...
-                                </Button>
-                            ) : (
-                                <Button
-                                    color="primary"
-                                    type="submit"
-                                    block
-                                    disabled={ user.username === "" || user.email === "" || user.password === ""  }
-                                >
-                                    Register
-                                </Button>
-                            )}
-                        </Form>
-                        <div className="mt-2">
-                            <small>Have an account? <Link to="/login">Please login</Link></small>
-                        </div>
-                   </CardBody>
-                </Card>
-            </div>
+      <div>
+      <div className="register-form">
+        <div className="col-md-4 offset-md-4">
+          <center>
+          <Button href="/" block theme="info">Go Home</Button><br/>
+            <h3>Register</h3>
+          </center>
+          <form onSubmit={submitUser}>
+          <div className="form-group">
+                <input 
+                type="text" 
+                name="first_name"
+                placeholder="FirstName"
+                className="form-control" 
+                id="first_name"
+                onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                type="text" 
+                name="last_name"
+                placeholder="LastName"
+                className="form-control" 
+                id="last_name"
+                onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                type="text" 
+                name="username"
+                placeholder="Username"
+                className="form-control" 
+                id="username"
+                onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                type="email" 
+                name="email"
+                placeholder="Email"
+                className="form-control" 
+                id="email"
+                onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                type="password" 
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="form-control" 
+                id="password"/>
+              </div>
+              <div className="form-group">
+                <input 
+                type="password" 
+                name="password_confirmation"
+                placeholder="Password Confirmation"
+                onChange={handleChange}
+                className="form-control" 
+                id="password_confirmation"/>
+              </div>
+              <Row>
+              <Col>
+              <Button
+                  outline
+                  theme="success"
+                  type="submit"
+                  className="btn btn-solid order-color"
+                  name="register"
+                >
+                  Register
+                </Button>
+                </Col>
+              <Col>
+                <h6>Already have an account   <a href="/login">Login</a></h6>
+              </Col>
+              </Row>
+            </form>
         </div>
-        </div>
+      </div>
+      </div>
     );
-
 }
-
-export default Register
+export default Register;

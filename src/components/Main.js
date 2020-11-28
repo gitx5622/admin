@@ -1,5 +1,4 @@
 import React from "react";
-import "../css/main.css";
 import { Button } from 'shards-react';
 import { useDispatch, useSelector } from "react-redux";
 import { SignOut } from "../store/auth/actions/authActions";
@@ -38,7 +37,7 @@ const Main = () => {
         <Button theme="info" pill href="/login">Login</Button>
       </li>
       <li style={{paddingLeft:"20px"}}>
-        <Button theme="info" pill href="/signup">Signup</Button>
+        <Button theme="info" pill href="/register">Signup</Button>
       </li>
     </>
   );

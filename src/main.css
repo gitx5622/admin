@@ -53,3 +53,16 @@ body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+/*
+=============== 
+Auth
+===============
+*/
+.login-form {
+    background-color: #eaebef;
+    padding: 15% 10%;
+  }
+  .register-form {
+    background-color: #eaebef;
+    padding: 10%;
+  }

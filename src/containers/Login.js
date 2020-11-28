@@ -1,96 +1,87 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, Link } from 'react-router-dom';
-import "./Auth.css";
-import { SignIn } from '../store/auth/actions/authActions';
-import background from '../images/background.jpg';
-import { Form, FormGroup, FormInput ,Button, Card, CardBody} from "shards-react";
+import { Redirect } from "react-router-dom";
+import { SignIn } from "../store/auth/actions/authActions";
+import {Row, Col, Button} from 'shards-react';
+
 
 const Login = () => {
+  const currentState = useSelector((state) => state.Auth);
 
-    const currentState = useSelector((state) => state.Auth);
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
 
-    const [user, setUser] = useState({
-        email:'',
-        password: ''
+  const userLogin = (credentials) => dispatch(SignIn(credentials));
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
     });
-    const dispatch = useDispatch()
+  };
+  const submitUser = (e) => {
+    e.preventDefault();
+    userLogin({
+      username: user.username,
+      password: user.password,
+    });
+  };
 
-    const userLogin = (credentials) => dispatch(SignIn(credentials))
-
-
-    const handleChange = e => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        })
-    }
-    const submitUser = (e) => {
-        e.preventDefault()
-        userLogin({
-            email: user.email,
-            password: user.password
-        });
-    }
-
-    if(currentState.isAuthenticated){
-        return <Redirect to='/' />
-    }
-
+  if (currentState.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
     return (
-        <div className="App"  style={{ backgroundImage:`url(${background})`,backgroundAttachment: "fixed",
-            backgroundRepeat: "no-repeat",backgroundSize:"cover" }}>
-            <div className="container Auth animated flash">
-                <Card className="card-style">
-                    <div className="card-body">
-                        <h1 className="title">Admin Portal</h1>
-                    </div>
-                    <CardBody>
-                        <Form onSubmit={submitUser}>
-                            <FormGroup>
-                                <label>Email</label>
-                                <FormInput type="text" name="email" placeholder="Enter email" onChange={handleChange} />
-
-                            </FormGroup>
-                            <FormGroup>
-                                <label>Password</label>
-                                <FormInput type="password" name="password" placeholder="Enter password" onChange={handleChange}/>
-                            </FormGroup>
-
-                            { currentState.isLoading ? (
-                                <Button
-                                    color="primary"
-                                    type="submit"
-                                    block
-                                    disabled
-                                >
-                                    Login...
-                                </Button>
-                            ) : (
-                                <Button
-                                    color="primary"
-                                    type="submit"
-                                    block
-                                    disabled={ user.email === "" || user.password === ""  }
-                                >
-                                    Login
-                                </Button>
-                            )}
-                        </Form>
-                        <div className="mt-2" style={{display: "flex", justifyContent: "space-between"}}>
-                            <div>
-                                <small><Link to="/signup">Sign Up</Link></small>
-                            </div>
-                            <div>
-                                <small><Link to="/forgotpassword">Forgot Password?</Link></small>
-                            </div>
-                        </div>
-
-                    </CardBody>
-                </Card>
-            </div>
+      <div>
+      <div className="login-form">
+        <div className="col-md-4 offset-md-4">
+          <center>
+              <Button href="/" block theme="info">Go Home</Button><br/>
+            <h3>Login</h3>
+          </center>
+          <form onSubmit={submitUser}>
+              <div className="form-group">
+                <input 
+                type="text" 
+                name="username"
+                placeholder="Username"
+                className="form-control" 
+                id="username"
+                onChange={handleChange} 
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                type="password" 
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="form-control" 
+                id="password"/>
+              </div>
+              <Row>
+              <Col>
+              <Button
+                  outline
+                  theme="success"
+                  type="submit"
+                  className="btn btn-solid order-color"
+                  name="login"
+                >
+                  Login
+                  </Button>
+                </Col>
+              <Col>
+                <h6>Dont have an account    <a href="/register">Register</a></h6>
+              </Col>
+              </Row>   
+            </form>
         </div>
+        </div>
+      </div>
     );
 }
 
-export default Login
+export default Login;

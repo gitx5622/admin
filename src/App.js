@@ -16,8 +16,8 @@ function App() {
             </Switch>
           </Main>
         </Route>
-        <Route path={["/signup","/login"]}>
-          <Route path='/signup' component={Register} />
+        <Route path={["/register","/login"]}>
+          <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
         </Route>
       </Router>
